@@ -3,8 +3,8 @@ require File.expand_path('../lib/mega/option/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Nick Sutterer"]
   gem.email         = ["apotonick@gmail.com"]
-  gem.description   = %q{Dynamic Options.}
-  gem.summary       = %q{Dynamic Options to evaluate at runtime.}
+  gem.description   = %q{Dynamic options.}
+  gem.summary       = %q{Dynamic options to evaluate at runtime.}
   gem.homepage      = "https://github.com/apotonick/mega-option"
   gem.license       = "MIT"
 

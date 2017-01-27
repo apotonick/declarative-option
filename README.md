@@ -1,6 +1,6 @@
-# Uber
+# Mega::Option
 
-_Dynamic Options to evaluate at runtime._
+_Dynamic options to evaluate at runtime._
 
 ## Installation
 
@@ -34,6 +34,7 @@ option.(Object.new, *args) #=> 2354383
 
 Same with objects marked with `Callable`.
 
+```ruby
 class CallMe
   include Mega::Callable
 
