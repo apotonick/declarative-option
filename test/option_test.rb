@@ -36,4 +36,18 @@ class OptionTest < Minitest::Spec
   end
 
   it { Option(Callio.new).().must_equal "callable!" }
+
+  #---
+  #- :callable
+  class Callme
+    def call(); "callme!" end
+  end
+  it { Option(Callme.new, callable: Callme).().must_equal "callme!" }
+
+  #- override #callable?
+  class MyCallableOption < Mega::Option
+    def callable?(*); true end
+  end
+
+  it { MyCallableOption.new.(Callme.new).().must_equal "callme!" }
 end
