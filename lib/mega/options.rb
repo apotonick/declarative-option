@@ -1,9 +1,9 @@
 require "mega/option"
 
 module Mega
-    def self.Options(options)
+    def self.Options(options, config={})
       Options.new.tap do |hsh|
-        options.each { |k,v| hsh[k] = Option(v, instance_exec: true) }
+        options.each { |k,v| hsh[k] = Option(v, config) }
       end
     end
 
