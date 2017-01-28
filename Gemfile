@@ -5,3 +5,4 @@ gemspec
 
 gem "benchmark-ips"
 gem "minitest-line"
+gem "rake"
