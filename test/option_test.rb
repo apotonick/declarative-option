@@ -1,9 +1,9 @@
 require "test_helper"
-require "mega/option"
+require "declarative/option"
 
 class OptionTest < Minitest::Spec
   def Option(*args)
-    Mega::Option(*args)
+    Declarative::Option(*args)
   end
 
   # proc
@@ -31,7 +31,7 @@ class OptionTest < Minitest::Spec
   #---
   # Callable
   class Callio
-    include Mega::Callable
+    include Declarative::Callable
     def call(); "callable!" end
   end
 
@@ -45,7 +45,7 @@ class OptionTest < Minitest::Spec
   it { Option(Callme.new, callable: Callme).().must_equal "callme!" }
 
   #- override #callable?
-  class MyCallableOption < Mega::Option
+  class MyCallableOption < Declarative::Option
     def callable?(*); true end
   end
 

@@ -1,6 +1,6 @@
-require "mega/option"
+require "declarative/option"
 
-module Mega
+module Declarative
     def self.Options(options, config={})
       Options.new.tap do |hsh|
         options.each { |k,v| hsh[k] = Option(v, config) }

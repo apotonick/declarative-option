@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    mega-option (0.1.0)
+    declarative-option (0.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -17,7 +17,7 @@ PLATFORMS
 
 DEPENDENCIES
   benchmark-ips
-  mega-option!
+  declarative-option!
   minitest
   minitest-line
   rake

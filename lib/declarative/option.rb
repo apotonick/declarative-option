@@ -1,4 +1,4 @@
-module Mega
+module Declarative
   Callable = Module.new
 
   def self.Option(value, options={})
