@@ -1,1 +1,1 @@
-require "mega/option"
+require "declarative/option"

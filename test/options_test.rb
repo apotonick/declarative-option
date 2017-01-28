@@ -1,7 +1,7 @@
-require 'test_helper'
-require 'declarative/options'
+require "test_helper"
+require "declarative/options"
 
-class UberOptionsTest < MiniTest::Spec
+class OptionsTest < MiniTest::Spec
   let (:dynamic) { Declarative::Options({ :volume =>1, :style => "Punkrock", :track => Proc.new { |i| i.to_s } }, instance_exec: true) }
 
   describe "#call" do
