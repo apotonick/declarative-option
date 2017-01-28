@@ -38,16 +38,35 @@ class OptionTest < Minitest::Spec
   it { Option(Callio.new).().must_equal "callable!" }
 
   #---
-  #- :callable
+  #- :callable overrides the marking class
   class Callme
-    def call(); "callme!" end
+    def call(*args); "callme! #{args}" end
   end
-  it { Option(Callme.new, callable: Callme).().must_equal "callme!" }
+  it { Option(Callme.new, callable: Callme).().must_equal "callme! []" }
 
+  # { callable: Object } will do
+  # 1. proc?
+  # 2. method?
+  # 3. everything else is treated as callable.
+  describe "callable: Object" do
+    let (:options) { { callable: Object } }
+
+    it { Option(Callme.new,                    options).(1).must_equal "callme! [1]" }
+    # proc is detected before callable.
+    it { Option(->(*args) { "proc! #{args}" }, options).(1).must_equal "proc! [1]" }
+    # :method is detected before callable.
+    it { Option(:hello,                        options).(Hello.new, 1).must_equal "Hello! [1]" }
+  end
+
+  #---
   #- override #callable?
   class MyCallableOption < Declarative::Option
     def callable?(*); true end
   end
 
-  it { MyCallableOption.new.(Callme.new).().must_equal "callme!" }
+  it { MyCallableOption.new.(Callme.new).().must_equal "callme! []" }
+  # proc is detected before callable.
+  it { MyCallableOption.new.(->(*args) { "proc! #{args.inspect}" }).(1).must_equal "proc! [1]" }
+  # :method is detected before callable.
+  it { MyCallableOption.new.(:hello).(Hello.new, 1).must_equal "Hello! [1]" }
 end
