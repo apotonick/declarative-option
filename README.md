@@ -1,4 +1,4 @@
-# Mega::Option
+# Declarative::Option
 
 _Dynamic options to evaluate at runtime._
 
@@ -21,14 +21,14 @@ Pass any value to `Option`, it will wrap it accordingly and make it executable, 
 It works with static values.
 
 ```ruby
-option = Mega::Option(false)
+option = Declarative::Option(false)
 option.(context, *args) #=> false
 ```
 
 When passing in a `:symbol`, this will be treated as a method that's called on the context. The context is the first argument to `Option#call`.
 
 ```ruby
-option = Mega::Option(:object_id)
+option = Declarative::Option(:object_id)
 option.(Object.new, *args) #=> 2354383
 ```
 
@@ -36,20 +36,20 @@ Same with objects marked with `Callable`.
 
 ```ruby
 class CallMe
-  include Mega::Callable
+  include Declarative::Callable
 
   def call(context, *args)
     puts "hello!"
   end
 end
 
-option = Mega::Option(Callable.new) #=> "hello!"
+option = Declarative::Option(Callable.new) #=> "hello!"
 ```
 
 And of course, with lambdas.
 
 ```ruby
-option = Mega::Option( ->(context, *args) { puts "yo!" } )
+option = Declarative::Option( ->(context, *args) { puts "yo!" } )
 option.(context) #=> yo!
 ```
 
