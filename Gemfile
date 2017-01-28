@@ -1,8 +1,4 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in uber.gemspec
+# Specify your gem's dependencies in declarative-option.gemspec
 gemspec
-
-gem "benchmark-ips"
-gem "minitest-line"
-gem "rake"

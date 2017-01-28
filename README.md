@@ -4,15 +4,19 @@ _Dynamic options to evaluate at runtime._
 
 ## Installation
 
-[![Gem Version](https://badge.fury.io/rb/mega-option.svg)](http://badge.fury.io/rb/mega-option)
+[![Gem Version](https://badge.fury.io/rb/declarative-option.svg)](http://badge.fury.io/rb/declarative-option)
+[![Build
+Status](https://travis-ci.org/apotonick/declarative-option.svg)](https://travis-ci.org/apotonick/declarative-option)
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'mega-options'
+gem 'declarative-option'
 ```
 
 Runs with Ruby >= 1.9.3.
+
+See [travis](https://travis-ci.org/apotonick/declarative-option) for JRuby and Rubinius current status.
 
 # Option
 

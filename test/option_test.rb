@@ -16,7 +16,7 @@ class OptionTest < Minitest::Spec
 
   # static
   it { Option(true).().must_equal true }
-  it { Option(nil).().must_equal nil }
+  it { Option(nil).().must_be_nil }
   it { Option(false).().must_equal false }
   # args are ignored.
   it { Option(true).(1,2,3).must_equal true }
