@@ -7,7 +7,7 @@ class OptionTest < Minitest::Spec
   end
 
   # proc
-  it { Option( ->(*args) { "proc! #{args.inspect}" } ).(1,2).must_equal "proc! [1, 2]" }
+  it { Option( ->(*args, **kwargs) { "proc! #{args.inspect} #{kwargs.inspect}" } ).(1, 2, a: 3).must_equal "proc! [1, 2] {:a=>3}" }
   it { Option( lambda { "proc!" } ).().must_equal "proc!" }
 
   # proc with instance_exec
@@ -23,10 +23,10 @@ class OptionTest < Minitest::Spec
 
   # instance method
   class Hello
-    def hello(*args); "Hello! #{args.inspect}" end
+    def hello(*args, **kwargs); "Hello! #{args.inspect} #{kwargs.inspect}" end
   end
-  it { Option(:hello).(Hello.new).must_equal "Hello! []" }
-  it { Option(:hello).(Hello.new, 1, 2).must_equal "Hello! [1, 2]" }
+  it { Option(:hello).(Hello.new).must_equal "Hello! [] {}" }
+  it { Option(:hello).(Hello.new, 1, 2, a: 3).must_equal "Hello! [1, 2] {:a=>3}" }
 
   #---
   # Callable
@@ -53,9 +53,9 @@ class OptionTest < Minitest::Spec
 
     it { Option(Callme.new,                    options).(1).must_equal "callme! [1]" }
     # proc is detected before callable.
-    it { Option(->(*args) { "proc! #{args}" }, options).(1).must_equal "proc! [1]" }
+    it { Option(->(*args, **kwargs) { "proc! #{args} #{kwargs}" }, options).(1, a: 2).must_equal "proc! [1] {:a=>2}" }
     # :method is detected before callable.
-    it { Option(:hello,                        options).(Hello.new, 1).must_equal "Hello! [1]" }
+    it { Option(:hello,                        options).(Hello.new, 1, a: 2).must_equal "Hello! [1] {:a=>2}" }
   end
 
   #---
@@ -66,7 +66,7 @@ class OptionTest < Minitest::Spec
 
   it { MyCallableOption.new.(Callme.new).().must_equal "callme! []" }
   # proc is detected before callable.
-  it { MyCallableOption.new.(->(*args) { "proc! #{args.inspect}" }).(1).must_equal "proc! [1]" }
+  it { MyCallableOption.new.(->(*args, **kwargs) { "proc! #{args.inspect} #{kwargs.inspect}" }).(1, a: 2).must_equal "proc! [1] {:a=>2}" }
   # :method is detected before callable.
-  it { MyCallableOption.new.(:hello).(Hello.new, 1).must_equal "Hello! [1]" }
+  it { MyCallableOption.new.(:hello).(Hello.new, 1, a: 2).must_equal "Hello! [1] {:a=>2}" }
 end

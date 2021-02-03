@@ -20,13 +20,24 @@ module Declarative
       value.is_a?(options[:callable] || Callable)
     end
 
-    def lambda_for_proc(value, options)
-      return ->(context, *args) { context.instance_exec(*args, &value) } if options[:instance_exec]
-      value
-    end
+    if RUBY_VERSION >= '2.7.0'
+      def lambda_for_proc(value, options)
+        return ->(context, *args, **kwargs) { context.instance_exec(*args, **kwargs, &value) } if options[:instance_exec]
+        value
+      end
 
-    def lambda_for_symbol(value, options)
-      ->(context, *args){ context.send(value, *args) }
+      def lambda_for_symbol(value, options)
+        ->(context, *args, **kwargs) { context.send(value, *args, **kwargs) }
+      end
+    else
+      def lambda_for_proc(value, options)
+        return ->(context, *args) { context.instance_exec(*args, &value) } if options[:instance_exec]
+        value
+      end
+
+      def lambda_for_symbol(value, options)
+        ->(context, *args){ context.send(value, *args) }
+      end
     end
 
     def lambda_for_callable(value, options)
