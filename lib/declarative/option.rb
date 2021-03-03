@@ -21,12 +21,17 @@ module Declarative
     end
 
     def lambda_for_proc(value, options)
-      return ->(context, *args) { context.instance_exec(*args, &value) } if options[:instance_exec]
-      value
+      return value unless options[:instance_exec]
+
+      ->(context, *args, keyword_arguments: {}, **) do
+        context.instance_exec(*args, **keyword_arguments, &value)
+      end
     end
 
     def lambda_for_symbol(value, options)
-      ->(context, *args){ context.send(value, *args) }
+      ->(context, *args, keyword_arguments: {}, **) do
+        context.send(value, *args, **keyword_arguments)
+      end
     end
 
     def lambda_for_callable(value, options)
